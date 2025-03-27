@@ -19,14 +19,26 @@ class ApiClient:
             "lang": "pt",
             "units": "metric"
         }
-        self.weather_data = self.get_weather()
+        self.headers = {
+            "Content-Type": "application/json",  
+            "Authorization": f"Bearer {self.api_key}"  
+        }
+        self.weather_data = self.get_response()
 
-    def get_weather(self):
+    def get_response(self):
         try:
-            response = requests.get(self.base_url, params=self.params)
-            # print(f"Requisição para {self.city} concluída com sucesso!")
+            response = requests.get(self.base_url, params=self.params, headers=self.headers)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
-            print(f"Erro na requisição para {self.city}: {e}")
+            print(f"Erro na requisição GET: {e}")
+            return None
+
+    def post(self, data):
+        try:
+            response = requests.post(self.base_url, params=self.params, json=data)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Erro na requisição POST: {e}")
             return None
