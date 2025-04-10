@@ -1,4 +1,4 @@
 cidade,temperatura,sensacao_termica,umidade,condicao_clima,descricao_clima,nascer_do_sol,por_do_sol,data_atualizacao,longitude,latitude,pressao_atmosferica,velocidade_vento,direcao_vento,cobertura_nuvens
-São Paulo,27.2,28.18,58,Clouds,nuvens dispersas,09:12:51,21:10:38,2025-03-27,-46.6361,-23.5475,1017,3.09,150,40
-Rio de Janeiro,29.52,34.33,72,Clouds,céu pouco nublado,08:59:01,20:57:03,2025-03-27,-43.2075,-22.9028,1014,6.69,130,20
-Lisboa,16.37,15.81,67,Clouds,nuvens quebradas,06:28:54,18:54:37,2025-03-27,-9.1333,38.7167,1017,5.66,340,75
+São Paulo,23.82,24.27,77,Clouds,céu pouco nublado,09:18:04,20:57:05,2025-04-10,-46.6361,-23.5475,1016,4.12,320,20
+Rio de Janeiro,27.98,30.5,69,Clouds,céu pouco nublado,09:03:56,20:43:47,2025-04-10,-43.2075,-22.9028,1013,5.14,280,20
+Lisboa,22.23,22.13,62,Clear,céu limpo,06:07:18,19:07:52,2025-04-10,-9.1333,38.7167,1011,4.12,60,0

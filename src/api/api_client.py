@@ -1,29 +1,11 @@
-import json
 import requests
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-api_key = os.getenv("api_key")
-base_url = os.getenv("base_url")
 
 class ApiClient:
-    def __init__(self, city, api_key=api_key, base_url=base_url):
-        self.api_key = api_key
+    def __init__(self, base_url, params, headers):
         self.base_url = base_url
-        self.city = city
-        self.params = {
-            "q": self.city,
-            "appid": self.api_key,
-            "lang": "pt",
-            "units": "metric"
-        }
-        self.headers = {
-            "Content-Type": "application/json",  
-            "Authorization": f"Bearer {self.api_key}"  
-        }
-        self.weather_data = self.get_response()
+        self.params = params
+        self.headers = headers
+        self.result = self.get_response()
 
     def get_response(self):
         try:

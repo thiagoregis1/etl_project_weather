@@ -1,21 +1,34 @@
+import os
 import json
 from api.api_client import ApiClient
 from extract.extract_api import ExtractAPI
 from transform.transform_api import TransformData
 from load.load_api import LoadData
+from dotenv import load_dotenv
+
+load_dotenv()
+
+api_key = os.getenv("api_key")
+base_url = os.getenv("base_url")
 
 
 class ETLPipeline:
     def __init__(self, list_of_cities):
         self.list_of_cities = list_of_cities
+        self.api_key = api_key
+        self.base_url = base_url
 
-    def process_city(self, city):
-        api_client = ApiClient(city=city)
-        if not api_client.weather_data:
+    def process_city(self, city, params):
+        headers = {
+            "Content-Type": "application/json",  
+            "Authorization": f"Bearer {self.api_key}"  
+        }
+        api_client = ApiClient(base_url=base_url, params=params, headers=headers)
+        if not api_client.result:
             print(f"Falha ao obter dados para {city}")
             return None
 
-        extracted_data = ExtractAPI(api_client.weather_data).columns
+        extracted_data = ExtractAPI(api_client.result).columns
         transformed_data = TransformData.transform_city_weather(extracted_data)
         print(f"Dados processados para {city}!")
         return transformed_data
@@ -23,7 +36,13 @@ class ETLPipeline:
     def run(self):
         date_to_save = []
         for city in self.list_of_cities:
-            transformed_data = self.process_city(city)
+            self.params = {
+                "q": city,
+                "appid": self.api_key,
+                "lang": "pt",
+                "units": "metric"
+            }
+            transformed_data = self.process_city(city, self.params)
             if transformed_data:
                 date_to_save.append(transformed_data)
 

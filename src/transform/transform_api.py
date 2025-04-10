@@ -1,32 +1,16 @@
-import json
-from datetime import datetime
-from extract.extract_api import ExtractAPI
+from utils.utils import Utils
 
 
 class TransformData:
-    @staticmethod
-    def unix_to_datetime(timestamp):
-        if timestamp:
-            return datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
-        return None
-
-    @staticmethod
-    def filter_columns(data, columns_selected):
-        return {key: str(data[key]) for key in columns_selected if key in data and data[key] is not None}
-
-    @staticmethod
-    def rename_columns(data, rename_map):
-        return {rename_map.get(key, key): value for key, value in data.items()}
-
     @staticmethod
     def transform_city_weather(city_weather_data):
         if not city_weather_data:
             return None
 
         # Convertendo timestamps
-        city_weather_data["dt"] = TransformData.unix_to_datetime(city_weather_data.get("dt")).split(" ")[0]
-        city_weather_data["sunrise"] = TransformData.unix_to_datetime(city_weather_data.get("sunrise")).split(" ")[1]
-        city_weather_data["sunset"] = TransformData.unix_to_datetime(city_weather_data.get("sunset")).split(" ")[1]
+        city_weather_data["dt"] = Utils.unix_to_datetime(city_weather_data.get("dt")).split(" ")[0]
+        city_weather_data["sunrise"] = Utils.unix_to_datetime(city_weather_data.get("sunrise")).split(" ")[1]
+        city_weather_data["sunset"] = Utils.unix_to_datetime(city_weather_data.get("sunset")).split(" ")[1]
 
         # Definindo as colunas necessárias
         columns_selected = [
@@ -35,7 +19,7 @@ class TransformData:
             "lon", "lat", "pressure", "wind_speed", "wind_deg", "clouds_all"
         ]
 
-        filtered_data = TransformData.filter_columns(city_weather_data, columns_selected)
+        filtered_data = Utils.filter_columns(city_weather_data, columns_selected)
 
         # Renomeando as colunas para português
         rename_map = {
@@ -57,6 +41,6 @@ class TransformData:
         }
 
         # Renomeando as colunas para português
-        renamed_data = TransformData.rename_columns(filtered_data, rename_map)
+        renamed_data = Utils.rename_columns(filtered_data, rename_map)
 
         return renamed_data
