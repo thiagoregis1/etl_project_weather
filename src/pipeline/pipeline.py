@@ -10,6 +10,7 @@ load_dotenv()
 
 api_key = os.getenv("api_key")
 base_url = os.getenv("base_url")
+bucket_name = os.getenv("bucket_name")
 
 
 class ETLPipeline:
@@ -48,6 +49,6 @@ class ETLPipeline:
 
         LoadData(date_to_save).save_to_json()
         LoadData(date_to_save).save_to_csv()
-        LoadData(date_to_save).save_to_parquet()
+        LoadData(date_to_save).save_to_parquet()     
 
         return json.dumps(date_to_save, ensure_ascii=False, indent=4)
